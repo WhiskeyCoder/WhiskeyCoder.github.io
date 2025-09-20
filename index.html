@@ -12,18 +12,18 @@
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-card: #1a1a1a;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-gradient: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
             --text-primary: #ffffff;
             --text-secondary: #b4b4b4;
             --text-muted: #888888;
-            --accent: #00d4ff;
-            --accent-hover: #00b8e6;
-            --accent-secondary: #667eea;
+            --accent: #00ff88;
+            --accent-hover: #00cc66;
+            --accent-secondary: #00ff88;
             --border: #2a2a2a;
-            --shadow: rgba(0, 212, 255, 0.15);
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow: rgba(0, 255, 136, 0.15);
+            --gradient-1: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+            --gradient-2: linear-gradient(135deg, #00ff88 0%, #00ff44 100%);
+            --gradient-3: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
         }
 
         * {
@@ -49,7 +49,7 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.03) 0%, rgba(0, 0, 0, 0.95) 70%);
+            background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.03) 0%, rgba(0, 0, 0, 0.95) 70%);
         }
 
         .matrix-rain {
@@ -259,18 +259,18 @@
             font-size: 5rem;
             font-weight: 900;
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #00d4ff 50%, #667eea 75%, #764ba2 100%);
+            background: linear-gradient(135deg, #00ff88 0%, #00cc66 25%, #00ff44 50%, #00ff88 75%, #00cc66 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.1;
-            text-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
             animation: titleGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes titleGlow {
-            0% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3)); }
-            100% { filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.5)); }
+            0% { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(0, 204, 102, 0.5)); }
         }
 
         .hero-subtitle {
@@ -319,13 +319,13 @@
             align-items: center;
             gap: 0.8rem;
             padding: 1.2rem 2.5rem;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
             border-radius: 50px;
             color: var(--bg-primary);
             font-weight: 700;
             text-decoration: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -347,7 +347,7 @@
 
         .hero-accent:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.4);
         }
 
         .hero-accent::after {
@@ -397,7 +397,7 @@
         .hero-secondary:hover {
             color: var(--bg-primary);
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.3);
         }
 
         .typing-cursor {
@@ -433,7 +433,7 @@
         /* Project Showcase Section */
         .projects-showcase {
             padding: 6rem 0;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.02) 0%, rgba(255, 107, 53, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.02) 0%, rgba(0, 204, 102, 0.02) 100%);
             margin: 4rem 0;
             border-radius: 30px;
             position: relative;
@@ -447,7 +447,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,212,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,136,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
             opacity: 0.3;
         }
 
@@ -477,7 +477,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 102, 0.1) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: -1;
@@ -489,7 +489,7 @@
 
         .project-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.2);
             border-color: var(--accent);
         }
 
@@ -571,7 +571,7 @@
         /* About Section */
         .about-section {
             padding: 6rem 0;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.02) 0%, rgba(0, 212, 255, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.02) 0%, rgba(0, 204, 102, 0.02) 100%);
             margin: 4rem 0;
             border-radius: 30px;
             position: relative;
@@ -585,7 +585,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="aboutGrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,107,53,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23aboutGrid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="aboutGrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,255,136,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23aboutGrid)"/></svg>');
             opacity: 0.3;
         }
 
@@ -619,7 +619,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 102, 0.05) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: -1;
@@ -631,7 +631,7 @@
 
         .about-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.15);
             border-color: var(--accent);
         }
 
@@ -651,7 +651,7 @@
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ff6b35 0%, #00d4ff 100%);
+            background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -683,14 +683,14 @@
 
         .stat:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.2);
             border-color: var(--accent);
         }
 
         .stat-number {
             font-size: 3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #00d4ff 100%);
+            background: linear-gradient(135deg, #00ff88 0%, #00cc66 50%, #00ff44 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -722,6 +722,7 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .blog-card::before {
@@ -731,7 +732,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 102, 0.1) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: -1;
@@ -743,7 +744,7 @@
 
         .blog-card:hover {
             transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(255, 107, 53, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 255, 136, 0.2);
             border-color: var(--accent);
         }
 
@@ -754,7 +755,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #ff6b35 0%, #f7931e 50%, #00d4ff 100%);
+            background: linear-gradient(90deg, #00ff88 0%, #00cc66 50%, #00ff44 100%);
             transform: scaleX(0);
             transition: transform 0.4s ease;
         }
@@ -764,14 +765,74 @@
         }
 
         .blog-card:hover .blog-title {
-            background: linear-gradient(135deg, #ff6b35 0%, #00d4ff 100%);
+            background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .blog-card:hover .read-more {
-            color: #ff6b35;
+            color: #00ff88;
+            transform: translateX(5px);
+        }
+
+        .blog-card .blog-meta {
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-card .blog-date {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .blog-card .blog-date::before {
+            content: "📝";
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .blog-card .blog-title {
+            position: relative;
+            z-index: 2;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card .blog-excerpt {
+            position: relative;
+            z-index: 2;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .blog-card .read-more {
+            position: relative;
+            z-index: 2;
+            color: var(--accent);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .blog-card .read-more::after {
+            content: "→";
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .blog-card:hover .read-more::after {
             transform: translateX(5px);
         }
 
@@ -865,6 +926,19 @@
             padding: 4rem;
             border: 1px solid var(--border);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.02) 0%, rgba(0, 204, 102, 0.02) 100%);
+            z-index: -1;
         }
 
         .blog-content.active {
@@ -987,7 +1061,7 @@
             border-left: 4px solid var(--accent);
             padding: 1rem 2rem;
             margin: 2rem 0;
-            background: rgba(0, 212, 255, 0.05);
+            background: rgba(0, 255, 136, 0.05);
             border-radius: 0 8px 8px 0;
             color: var(--text-secondary);
             font-style: italic;
@@ -1400,7 +1474,7 @@
                         </div>
                         <div class="about-stats">
                             <div class="stat">
-                                <div class="stat-number" id="project-count">6+</div>
+                                <div class="stat-number" id="project-count">50+</div>
                                 <div class="stat-label">Chaotic Projects</div>
                             </div>
                             <div class="stat">
@@ -1521,7 +1595,7 @@
                 this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
                 this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-                this.ctx.fillStyle = '#00d4ff';
+                this.ctx.fillStyle = '#00ff88';
                 this.ctx.font = `${this.fontSize}px 'JetBrains Mono', 'SF Mono', Monaco, monospace`;
 
                 for (let i = 0; i < this.columns.length; i++) {
@@ -1803,7 +1877,6 @@
                 const htmlContent = marked.parse(blog.content);
 
                 document.getElementById('blog-content-inner').innerHTML = `
-                    <h1>${blog.title}</h1>
                     <div class="blog-meta" style="margin-bottom: 3rem;">
                         <div class="blog-date">${this.formatDate(blog.date)}</div>
                     </div>
