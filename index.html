@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligence & Security Blog</title>
+    <title>WhiskeyCoder Blog</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
@@ -68,7 +68,7 @@
         }
 
         .logo::before {
-            content: "⚡";
+            content: "🥃";
             font-size: 1.5rem;
         }
 
@@ -167,7 +167,7 @@
         }
 
         .blog-date::before {
-            content: "📅";
+            content: "📝";
         }
 
         .blog-title {
@@ -314,7 +314,7 @@
         }
 
         .loading::after {
-            content: "⚡";
+            content: "🥃";
             display: inline-block;
             animation: pulse 1.5s infinite;
             font-size: 2rem;
@@ -373,12 +373,12 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo" onclick="showHome()">Intel Blog</a>
+                <a href="#" class="logo" onclick="showHome()">WhiskeyCoder</a>
                 <nav>
                     <ul>
-                        <li><a href="#" onclick="showHome()">Home</a></li>
+                        <li><a href="#" onclick="showHome()">Posts</a></li>
+                        <li><a href="#projects">Projects</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -402,7 +402,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Intelligence & Security Blog. Built with GitHub Pages.</p>
+            <p>&copy; 2025 WhiskeyCoder. Random projects, code experiments, and digital adventures.</p>
         </div>
     </footer>
 
@@ -446,9 +446,10 @@
             async loadFallbackBlogs() {
                 // Fallback method - you'll need to maintain this list manually
                 const blogFiles = [
-                    'sample-post.md',
-                    'another-post.md'
-                    // Add your blog filenames here
+                    'building-automated-scraper.md',
+                    'python-api-wrapper.md',
+                    'homelab-setup.md'
+                    // Add your project writeup filenames here
                 ];
 
                 for (const filename of blogFiles) {
@@ -523,7 +524,7 @@
                 const blogList = document.getElementById('blog-list');
                 
                 if (this.blogs.length === 0) {
-                    blogList.innerHTML = '<div class="error">No blog posts found. Add markdown files to the /blogs/ folder.</div>';
+                    blogList.innerHTML = '                    <div class="error">No project writeups found yet. Add markdown files to the /blogs/ folder to get started!</div>';
                     return;
                 }
 
