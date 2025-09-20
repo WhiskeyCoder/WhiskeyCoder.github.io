@@ -225,6 +225,15 @@
             width: 80%;
         }
 
+        nav a.active {
+            color: var(--accent);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        nav a.active::after {
+            width: 80%;
+        }
+
         /* Hero Section - Whiskey Coder Style */
         .hero {
             padding: 8rem 0 6rem 0;
@@ -1332,7 +1341,8 @@
                 <a href="#" class="logo" onclick="showHome()">WhiskeyCoder</a>
                 <nav>
                     <ul>
-                        <li><a href="#" onclick="showHome()">Posts</a></li>
+                        <li><a href="#" onclick="showHome()">Home</a></li>
+                        <li><a href="#" onclick="showBlogs()">Blogs</a></li>
                         <li><a href="https://github.com/WhiskeyCoder?tab=repositories" target="_blank">Projects</a></li>
                         <li><a href="https://github.com/WhiskeyCoder/WhiskeyCoder" target="_blank">About</a></li>
                     </ul>
@@ -1497,8 +1507,22 @@
                 </section>
             </div>
 
+            <div id="blogs-view" style="display: none;">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1>Blog Posts & Writeups</h1>
+                        <p>Deep dives into my chaotic coding adventures, technical explorations, and whiskey-fueled innovations.</p>
+                    </div>
+                </div>
+                <section id="blogs-section">
+                    <div id="blogs-list" class="blog-grid">
+                        <div class="loading">Loading awesome writeups...</div>
+                    </div>
+                </section>
+            </div>
+
             <div id="blog-view" class="blog-content">
-                <button class="back-button" onclick="showHome()">Back to Posts</button>
+                <button class="back-button" onclick="showBlogs()">Back to Blogs</button>
                 <div id="blog-content-inner"></div>
             </div>
         </div>
@@ -1669,6 +1693,20 @@
                 await this.loadBlogList();
                 this.setupHighlighting();
                 this.setupAnimations();
+                this.setupNavigation();
+            }
+
+            setupNavigation() {
+                // Add active class management for navigation
+                this.updateActiveNav = (activeTab) => {
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    if (activeTab) {
+                        const activeLink = document.querySelector(`nav a[onclick="${activeTab}"]`);
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                };
             }
 
             setupAnimations() {
@@ -1858,6 +1896,31 @@
                 blogList.innerHTML = blogsHTML;
             }
 
+            renderBlogsList() {
+                const blogsList = document.getElementById('blogs-list');
+
+                if (this.blogs.length === 0) {
+                    blogsList.innerHTML = '<div class="error">No blog posts found yet. Add markdown files to the /blogs/ folder to get started!</div>';
+                    return;
+                }
+
+                // Sort blogs by date (newest first)
+                this.blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                const blogsHTML = this.blogs.map(blog => `
+                    <div class="blog-card" onclick="blogManager.showBlog('${blog.filename}')">
+                        <div class="blog-meta">
+                            <div class="blog-date">${this.formatDate(blog.date)}</div>
+                        </div>
+                        <h2 class="blog-title">${blog.title}</h2>
+                        <div class="blog-excerpt">${blog.excerpt}</div>
+                        <div class="read-more">Read more</div>
+                    </div>
+                `).join('');
+
+                blogsList.innerHTML = blogsHTML;
+            }
+
             formatDate(dateString) {
                 const date = new Date(dateString);
                 return date.toLocaleDateString('en-US', {
@@ -1883,8 +1946,9 @@
                     ${htmlContent}
                 `;
 
-                // Show blog view
+                // Show blog view and hide other views
                 document.getElementById('home-view').style.display = 'none';
+                document.getElementById('blogs-view').style.display = 'none';
                 document.getElementById('blog-view').classList.add('active');
 
                 // Highlight code blocks
@@ -1918,7 +1982,18 @@
 
         function showHome() {
             document.getElementById('home-view').style.display = 'block';
+            document.getElementById('blogs-view').style.display = 'none';
             document.getElementById('blog-view').classList.remove('active');
+            blogManager.updateActiveNav('showHome()');
+            window.scrollTo(0, 0);
+        }
+
+        function showBlogs() {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('blogs-view').style.display = 'block';
+            document.getElementById('blog-view').classList.remove('active');
+            blogManager.updateActiveNav('showBlogs()');
+            blogManager.renderBlogsList();
             window.scrollTo(0, 0);
         }
 
