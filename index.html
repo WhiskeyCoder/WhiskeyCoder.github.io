@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence & Security Blog</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent: #00ff88;
+            --accent-hover: #00cc6a;
+            --border: #333;
+            --shadow: rgba(0, 255, 136, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "⚡";
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-date::before {
+            content: "📅";
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .read-more {
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more::after {
+            content: "→";
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .read-more {
+            gap: 1rem;
+        }
+
+        .blog-card:hover .read-more::after {
+            transform: translateX(5px);
+        }
+
+        /* Blog Content View */
+        .blog-content {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .blog-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-button {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .back-button::before {
+            content: "←";
+        }
+
+        /* Markdown Content Styling */
+        .blog-content h1, .blog-content h2, .blog-content h3 {
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+        }
+
+        .blog-content h1 {
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-content h2 {
+            font-size: 2rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-content code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            color: var(--accent);
+        }
+
+        .blog-content pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .blog-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: "⚡";
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            font-size: 2rem;
+            margin-left: 1rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        /* Error State */
+        .error {
+            text-align: center;
+            padding: 4rem 0;
+            color: #ff4757;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .blog-card {
+                padding: 1.5rem;
+            }
+
+            .blog-content {
+                padding: 2rem 1rem;
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" onclick="showHome()">Intel Blog</a>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showHome()">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="home-view">
+                <div id="blog-list" class="blog-grid">
+                    <div class="loading">Loading blog posts...</div>
+                </div>
+            </div>
+
+            <div id="blog-view" class="blog-content">
+                <button class="back-button" onclick="showHome()">Back to Posts</button>
+                <div id="blog-content-inner"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Intelligence & Security Blog. Built with GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <script>
+        class BlogManager {
+            constructor() {
+                this.blogs = [];
+                this.currentBlog = null;
+                this.init();
+            }
+
+            async init() {
+                await this.loadBlogList();
+                this.setupHighlighting();
+            }
+
+            async loadBlogList() {
+                try {
+                    // Try to fetch from GitHub API first
+                    const response = await fetch('https://api.github.com/repos/' + this.getRepoPath() + '/contents/blogs');
+                    
+                    if (response.ok) {
+                        const files = await response.json();
+                        const markdownFiles = files.filter(file => file.name.endsWith('.md'));
+                        
+                        for (const file of markdownFiles) {
+                            await this.loadBlogMetadata(file.name, file.download_url);
+                        }
+                    } else {
+                        // Fallback to direct file access
+                        await this.loadFallbackBlogs();
+                    }
+                    
+                    this.renderBlogList();
+                } catch (error) {
+                    console.error('Error loading blogs:', error);
+                    this.showError();
+                }
+            }
+
+            async loadFallbackBlogs() {
+                // Fallback method - you'll need to maintain this list manually
+                const blogFiles = [
+                    'sample-post.md',
+                    'another-post.md'
+                    // Add your blog filenames here
+                ];
+
+                for (const filename of blogFiles) {
+                    try {
+                        await this.loadBlogMetadata(filename, `./blogs/${filename}`);
+                    } catch (error) {
+                        console.log(`Couldn't load ${filename}`);
+                    }
+                }
+            }
+
+            getRepoPath() {
+                // Extract repo info from current URL
+                const hostname = window.location.hostname;
+                if (hostname.includes('github.io')) {
+                    const parts = hostname.split('.');
+                    const username = parts[0];
+                    const repo = window.location.pathname.split('/')[1] || username + '.github.io';
+                    return `${username}/${repo}`;
+                }
+                return 'your-username/your-repo'; // Fallback
+            }
+
+            async loadBlogMetadata(filename, url) {
+                try {
+                    const response = await fetch(url);
+                    const content = await response.text();
+                    
+                    const blog = this.parseBlogMetadata(content, filename);
+                    this.blogs.push(blog);
+                } catch (error) {
+                    console.error(`Error loading ${filename}:`, error);
+                }
+            }
+
+            parseBlogMetadata(content, filename) {
+                const lines = content.split('\n');
+                const blog = {
+                    filename,
+                    title: filename.replace('.md', '').replace(/-/g, ' '),
+                    date: new Date().toISOString().split('T')[0],
+                    excerpt: '',
+                    content
+                };
+
+                // Parse frontmatter if it exists
+                if (lines[0].trim() === '---') {
+                    let i = 1;
+                    while (i < lines.length && lines[i].trim() !== '---') {
+                        const line = lines[i].trim();
+                        if (line.startsWith('title:')) {
+                            blog.title = line.replace('title:', '').trim().replace(/['"]/g, '');
+                        } else if (line.startsWith('date:')) {
+                            blog.date = line.replace('date:', '').trim();
+                        }
+                        i++;
+                    }
+                    
+                    // Get content after frontmatter
+                    const contentStart = i + 1;
+                    blog.content = lines.slice(contentStart).join('\n');
+                }
+
+                // Generate excerpt from first paragraph
+                const paragraphs = blog.content.split('\n\n');
+                blog.excerpt = paragraphs.find(p => p.trim() && !p.startsWith('#'))?.substring(0, 200) + '...' || 'No excerpt available.';
+
+                return blog;
+            }
+
+            renderBlogList() {
+                const blogList = document.getElementById('blog-list');
+                
+                if (this.blogs.length === 0) {
+                    blogList.innerHTML = '<div class="error">No blog posts found. Add markdown files to the /blogs/ folder.</div>';
+                    return;
+                }
+
+                // Sort blogs by date (newest first)
+                this.blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                const blogsHTML = this.blogs.map(blog => `
+                    <div class="blog-card" onclick="blogManager.showBlog('${blog.filename}')">
+                        <div class="blog-meta">
+                            <div class="blog-date">${this.formatDate(blog.date)}</div>
+                        </div>
+                        <h2 class="blog-title">${blog.title}</h2>
+                        <p class="blog-excerpt">${blog.excerpt}</p>
+                        <div class="read-more">Read more</div>
+                    </div>
+                `).join('');
+
+                blogList.innerHTML = blogsHTML;
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+
+            showBlog(filename) {
+                const blog = this.blogs.find(b => b.filename === filename);
+                if (!blog) return;
+
+                this.currentBlog = blog;
+                
+                // Convert markdown to HTML
+                const htmlContent = marked.parse(blog.content);
+                
+                document.getElementById('blog-content-inner').innerHTML = `
+                    <h1>${blog.title}</h1>
+                    <div class="blog-meta" style="margin-bottom: 2rem;">
+                        <div class="blog-date">${this.formatDate(blog.date)}</div>
+                    </div>
+                    ${htmlContent}
+                `;
+
+                // Show blog view
+                document.getElementById('home-view').style.display = 'none';
+                document.getElementById('blog-view').classList.add('active');
+                
+                // Highlight code blocks
+                this.highlightCode();
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            showError() {
+                document.getElementById('blog-list').innerHTML = `
+                    <div class="error">
+                        <h2>Unable to load blog posts</h2>
+                        <p>Make sure your markdown files are in the /blogs/ folder and the repository is properly configured.</p>
+                    </div>
+                `;
+            }
+
+            setupHighlighting() {
+                hljs.configure({
+                    languages: ['python', 'javascript', 'bash', 'json', 'yaml', 'markdown']
+                });
+            }
+
+            highlightCode() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        }
+
+        function showHome() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('blog-view').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize the blog manager
+        const blogManager = new BlogManager();
+    </script>
+</body>
+</html>
