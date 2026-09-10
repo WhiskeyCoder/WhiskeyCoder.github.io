@@ -714,6 +714,72 @@
             letter-spacing: 1px;
         }
 
+        .live-apps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            max-width: 900px;
+        }
+
+        .live-app-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .live-app-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.12);
+            transform: translateX(4px);
+        }
+
+        .live-app-name {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .live-app-name:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .live-app-desc {
+            color: var(--text-secondary);
+        }
+
+        .live-apps-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            max-width: 900px;
+        }
+
+        .live-apps-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .live-apps-note a:hover {
+            text-decoration: underline;
+        }
+
+        .live-apps-note code {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 4px;
+            padding: 0.15rem 0.4rem;
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -1343,6 +1409,7 @@
                     <ul>
                         <li><a href="#" onclick="showHome()">Home</a></li>
                         <li><a href="#" onclick="showBlogs()">Blogs</a></li>
+                        <li><a href="#" onclick="showLiveApps()">Live Apps</a></li>
                         <li><a href="https://github.com/WhiskeyCoder?tab=repositories" target="_blank">Projects</a></li>
                         <li><a href="https://github.com/WhiskeyCoder/WhiskeyCoder" target="_blank">About</a></li>
                     </ul>
@@ -1517,6 +1584,23 @@
                 <section id="blogs-section">
                     <div id="blogs-list" class="blog-grid">
                         <div class="loading">Loading awesome writeups...</div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="live-apps-view" style="display: none;">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1>Live Apps</h1>
+                        <p>Single-page browser experiments — click a name to launch it live.</p>
+                    </div>
+                </div>
+                <section id="live-apps-section">
+                    <p class="live-apps-note">
+                        Hosted from <a href="https://github.com/WhiskeyCoder/Random-Web-Experiments" target="_blank" rel="noopener">Random-Web-Experiments</a> and other repos. To add more, edit <code>live-apps.json</code> in this repo.
+                    </p>
+                    <div id="live-apps-list" class="live-apps-list">
+                        <div class="loading">Loading live apps...</div>
                     </div>
                 </section>
             </div>
@@ -1947,8 +2031,7 @@
                 `;
 
                 // Show blog view and hide other views
-                document.getElementById('home-view').style.display = 'none';
-                document.getElementById('blogs-view').style.display = 'none';
+                hideAllViews();
                 document.getElementById('blog-view').classList.add('active');
 
                 // Highlight code blocks
@@ -1980,25 +2063,99 @@
             }
         }
 
-        function showHome() {
-            document.getElementById('home-view').style.display = 'block';
+        const FALLBACK_LIVE_APPS = [
+            {
+                name: 'Flappy Bird',
+                description: 'A fully working Flappy Bird-style game built in a single HTML file',
+                url: 'https://whiskeycoder.github.io/Random-Web-Experiments/flappybird_one_page_game/flappybird_one_page_game.html'
+            },
+            {
+                name: 'Zombie Outbreak Simulator',
+                description: 'A random zombie infection simulator with chaos theory mechanics',
+                url: 'https://whiskeycoder.github.io/Random-Web-Experiments/OutBreak_Infection_Simulator/infection-sim.html'
+            },
+            {
+                name: 'Physics Sandbox',
+                description: 'A fun little browser-based physics engine with sand, water, walls, and acid',
+                url: 'https://whiskeycoder.github.io/Random-Web-Experiments/Sandbox_Physics_Sim/sandbox.html'
+            }
+        ];
+
+        class LiveAppsManager {
+            constructor() {
+                this.apps = [];
+                this.init();
+            }
+
+            async init() {
+                await this.loadApps();
+                this.renderAppsList();
+            }
+
+            async loadApps() {
+                try {
+                    const response = await fetch('./live-apps.json');
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.apps = data.apps || [];
+                    } else {
+                        this.apps = FALLBACK_LIVE_APPS;
+                    }
+                } catch (error) {
+                    console.error('Error loading live apps:', error);
+                    this.apps = FALLBACK_LIVE_APPS;
+                }
+            }
+
+            renderAppsList() {
+                const list = document.getElementById('live-apps-list');
+
+                if (this.apps.length === 0) {
+                    list.innerHTML = '<div class="error">No live apps listed yet. Add entries to live-apps.json to get started.</div>';
+                    return;
+                }
+
+                list.innerHTML = this.apps.map(app => `
+                    <div class="live-app-item">
+                        <a href="${app.url}" class="live-app-name" target="_blank" rel="noopener">${app.name}</a>
+                        <span class="live-app-desc"> — ${app.description}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function hideAllViews() {
+            document.getElementById('home-view').style.display = 'none';
             document.getElementById('blogs-view').style.display = 'none';
+            document.getElementById('live-apps-view').style.display = 'none';
             document.getElementById('blog-view').classList.remove('active');
+        }
+
+        function showHome() {
+            hideAllViews();
+            document.getElementById('home-view').style.display = 'block';
             blogManager.updateActiveNav('showHome()');
             window.scrollTo(0, 0);
         }
 
         function showBlogs() {
-            document.getElementById('home-view').style.display = 'none';
+            hideAllViews();
             document.getElementById('blogs-view').style.display = 'block';
-            document.getElementById('blog-view').classList.remove('active');
             blogManager.updateActiveNav('showBlogs()');
             blogManager.renderBlogsList();
             window.scrollTo(0, 0);
         }
 
+        function showLiveApps() {
+            hideAllViews();
+            document.getElementById('live-apps-view').style.display = 'block';
+            blogManager.updateActiveNav('showLiveApps()');
+            window.scrollTo(0, 0);
+        }
+
         // Initialize the blog manager
         const blogManager = new BlogManager();
+        const liveAppsManager = new LiveAppsManager();
     </script>
 </body>
 </html>
