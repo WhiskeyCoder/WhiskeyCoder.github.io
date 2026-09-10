@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "Flappy Bird",
+      "description": "A fully working Flappy Bird-style game built in a single HTML file",
+      "url": "https://whiskeycoder.github.io/Random-Web-Experiments/flappybird_one_page_game/flappybird_one_page_game.html"
+    },
+    {
+      "name": "Zombie Outbreak Simulator",
+      "description": "A random zombie infection simulator with chaos theory mechanics",
+      "url": "https://whiskeycoder.github.io/Random-Web-Experiments/OutBreak_Infection_Simulator/infection-sim.html"
+    },
+    {
+      "name": "Physics Sandbox",
+      "description": "A fun little browser-based physics engine with sand, water, walls, and acid",
+      "url": "https://whiskeycoder.github.io/Random-Web-Experiments/Sandbox_Physics_Sim/sandbox.html"
+    }
+  ]
+}
