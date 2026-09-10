@@ -19,6 +19,11 @@
       "name": "Matrix Screensaver",
       "description": "A very simple and Basic Screen Saver For Matrix Fans",
       "url": "https://whiskeycoder.github.io/Random-Web-Experiments/Matrix_Screen_Saver/matrix.html"
+    },
+    {
+      "name": "Synaps",
+      "description": "real-time feed-forward visualizer · live forward & backward pass",
+      "url": "https://whiskeycoder.github.io/Random-Web-Experiments/Synaps/synaps.html"
     }
   ]
 }
