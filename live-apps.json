@@ -34,6 +34,11 @@
       "name": "Human Tokens",
       "description": "Real dumb app for a human to calculate their tok/s",
       "url": "https://whiskeycoder.github.io/Random-Web-Experiments/HumanTokens/human_tokens.html"
+    },
+    {
+      "name": "Web eBook Viewer",
+      "description": "A simple web based eBook viewer, load your local files in your local browser, offline and private no need to host",
+      "url": "https://whiskeycoder.github.io/Random-Web-Experiments/Ebook-Shelf/ebook-shelf.html"
     }
   ]
 }
